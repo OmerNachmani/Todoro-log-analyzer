@@ -77,7 +77,31 @@ The configuration file defines the patterns Totoro will search for in the log fi
 ```
 ### Explanation of the Example
 
-This configuration defines a single scenario named **"CONNECTED to good SSID"**. The **`start_pattern`** `[ATTEMPT_TO_CONNECT]` marks the beginning of the search, and the **`end_pattern`** `CONNECTED - to:` marks the end. Between these two patterns, Totoro looks for any line matching `"SSID Name: 'Best_SSID_Ever'"` or `"SSID Name: 'I'm also a nice SSID'"`. The **`mandatory_logic`** field is set to `"OR"`, meaning that if either of these lines appears, the scenario is considered a match. If a match is found, Totoro logs the **`success_message`** `"Matched rule"` in the CSV report. If no match is found, the **`fail_message`** `"Violates rule"` is logged, unless **`include_fails`** is set to `false`, which means only successful matches will be recorded.
+This configuration defines a single scenario named **"CONNECTED to good SSID"**. Here’s a breakdown of what each field means:
+
+- **`name`**: Descriptive name for the scenario.  
+- **`use_regex`**: Set to `false`, meaning the tool will use simple string matching instead of regular expressions.  
+- **`start_pattern`**: The scenario starts when the line contains `[ATTEMPT_TO_CONNECT]`.  
+- **`end_pattern`**: The scenario ends when the line contains `CONNECTED - to:`.  
+- **`lines_between_start_to_end`**: Specifies lines that must appear between the start and end patterns. In this example, it looks for one of the following lines:  
+  - `SSID Name: 'Best_SSID_Ever'`  
+  - `SSID Name: 'I'm also a nice SSID'`  
+- **`mandatory_logic`**: Set to `"OR"`, meaning at least one of the specified lines must be present for the scenario to be considered a match.  
+- **`success_message`**: The message added to the CSV when the scenario matches (`"Matched rule"`).  
+- **`fail_message`**: The message added when the scenario does not match (`"Violates rule"`).  
+- **`include_fails`**: Set to `false`, meaning only successful matches will be included in the CSV report.
+
+### How This Works in Practice
+
+When Totoro scans a log file, it will:
+
+1. Look for a line containing `[ATTEMPT_TO_CONNECT]` (start pattern).  
+2. Between the start pattern and a line containing `CONNECTED - to:` (end pattern), it will check if any of the lines match:  
+   - `SSID Name: 'Best_SSID_Ever'`  
+   - `SSID Name: 'I'm also a nice SSID'`  
+3. If either of those lines appears, it logs the scenario as **"Matched rule"**.  
+4. If not, it logs **"Violates rule"** (unless `include_fails` is set to `false`).
+
 
 ## Contributing
 
