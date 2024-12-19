@@ -1,0 +1,16 @@
+{
+    "scenarios": [
+        {
+            "name": "CONNECTED to EHT",
+            "start_pattern": "[ATTEMPT_TO_CONNECT] Ssid",
+            "end_pattern": "CONNECTED - to:",
+            "lines_between_start_to_end": [
+                "+-+ bestSuppMode                    = HE (0x3)"
+            ],
+            "mandatory_logic": "OR",
+            "success_message": "Matched rule",
+            "fail_message": "Violates rule",
+            "include_fails": false
+        }
+    ]
+}
