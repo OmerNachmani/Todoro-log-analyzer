@@ -1,11 +1,13 @@
 {
     "scenarios": [
         {
-            "name": "CONNECTED to EHT",
-            "start_pattern": "[ATTEMPT_TO_CONNECT] Ssid",
+            "name": "CONNECTED to good SSID",
+            "use_regex": false,
+            "start_pattern": "[ATTEMPT_TO_CONNECT]",
             "end_pattern": "CONNECTED - to:",
             "lines_between_start_to_end": [
-                "+-+ bestSuppMode                    = HE (0x3)"
+                "SSID Name: 'Best_SSID_Ever'",
+                "SSID Name: 'I'm also a nice SSID'"
             ],
             "mandatory_logic": "OR",
             "success_message": "Matched rule",
